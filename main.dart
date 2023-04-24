@@ -1,43 +1,47 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-main(){
+main() {
   runApp(ComponenteInicial());
 }
-class ComponenteInicial extends StatelessWidget{
-  void eventoBotao(){
-    print("Clicou");
-  }
-Widget build(BuildContext){
-  return MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text("Perguntas e respostas"),
-      ),
-      body:Center(
 
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(onPressed: eventoBotao,
-           child: Text("Enviar")),
-           ElevatedButton(onPressed: eventoBotao,
-           child: Text("Cancelar")),
-            ElevatedButton(onPressed: eventoBotao,
-           child: Text("Salvar")),
-           Column(
-            children: [
-              Text("Aprendendo"),
-              Text("Programação"),
-              Text("Flutter"),
-            ],
-           )
-        ],
-       )
-      )
-    )
-  );
+class ComponenteInicial extends StatefulWidget {
+  @override
+  State<ComponenteInicial> createState() => _ComponenteInicialState();
 }
 
+class _ComponenteInicialState extends State<ComponenteInicial> {
+  var contador = 0;
+
+  var perguntas = [
+    "Qual sua serie favorita?",
+    "Qual sua rede social favorita?",
+    "Qual sua cor favorita?",
+    "Qual sua comida favorita?"
+  ];
+
+  void eventoBotao() {
+    setState(() {
+      contador:
+      contador++;
+    });
+    print(contador);
+  }
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text("Atividade 3 - Mariana Coelho"),
+          ),
+          body: Column(
+            children: [
+              Text(perguntas[contador]),
+              ElevatedButton(onPressed: eventoBotao, child: Text("Opção 1")),
+              ElevatedButton(onPressed: eventoBotao, child: Text("Opção 2")),
+              ElevatedButton(onPressed: eventoBotao, child: Text("Opção 3")),
+            ],
+          )),
+    );
+  }
 }
