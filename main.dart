@@ -1,40 +1,41 @@
 import 'package:flutter/material.dart';
-import './questao.dart';
-import './respostas.dart';
 
-main() {
+import './questionario.dart';
+import './resposta.dart';
+import './questao.dart';
+
+void main() {
   runApp(AulaComponentes());
 }
 
-class AulaComponentes extends StatefulWidget{
+class AulaComponentes extends StatefulWidget {
   @override
   State<AulaComponentes> createState() => _AulaComponentesState();
 }
 
 class _AulaComponentesState extends State<AulaComponentes> {
-
   var perguntaAtual = 0;
   var cor = Colors.white;
 
-  final List<Map<String, Object>> questionario = [
+  final List<Map<String, Object>> perguntas = [
     {
-      "pergunta": "Cachorro tem quantas patas?",
-      "respostas": ["1", "2", "3", "4", "5"]
+      "texto": "Qual sua linguagem favorita?",
+      "respostas": ["Python", "Java", "JavaScript"]
     },
     {
-      "pergunta": "Qual sua comida favorita?",
-      "respostas": ["Lasanha", "pizza", "Arroz com galinha", "Canjica"]
+      "texto": "Qual é seu animal favorito?",
+      "respostas": ["Cachorro", "Gato", "Tartaruga", "Periquito"]
     },
     {
-      "pergunta": "Qual sua materia favorita?",
-      "respostas": ["matemática", "Biologia", "Sociologia"]
+      "texto": "Qual a sua cor favorita?",
+      "respostas": ["Amarelo", "Preto", "Branco", "Azul", "Vermelho"]
     },
   ];
 
   bool get temPergunta {
-    return perguntaAtual < questionario.length;
+    return perguntaAtual < perguntas.length;
   }
-  
+
   void acao() {
     setState(() {
       perguntaAtual++;
@@ -43,27 +44,20 @@ class _AulaComponentesState extends State<AulaComponentes> {
   }
 
   Widget build(BuildContext context) {
-
-    List<Widget> respostas = [];
-
-    if (temPergunta) {
-      for (var resposta in questionario[perguntaAtual]["respostas"] as List<String>) {
-        respostas.add(
-          Resposta(resposta, acao),
-        );
-      }
-    }
-    
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: temPergunta ? Questao(questionario[perguntaAtual]["pergunta"].toString()) : Questao("Terminou"),
+          title: temPergunta
+              ? Questao(perguntas[perguntaAtual]["texto"].toString())
+              : Questao("Terminou"),
         ),
-        body: temPergunta ? Column(
-          children: [
-            ...respostas,
-          ],
-        ) : Text("Resultado"),
+        body: temPergunta
+            ? Questionario(
+                perguntas: perguntas,
+                perguntaAtual: perguntaAtual,
+                onRespostaSelecionada: () => acao(),
+              )
+            : Text("Resultado"),
       ),
     );
   }
